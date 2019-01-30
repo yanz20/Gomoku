@@ -32,4 +32,4 @@ Techniques to use:
 ![Game Menu](Menu.png "Menu")
 
  
-![Game](AI Vs human2.png "AI Vs human")
+![Game](AIVshuman2.png "AI Vs human")
