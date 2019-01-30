@@ -30,3 +30,6 @@ Techniques to use:
     2.Run game.py in any IDE with pygame installed.
     
 ![Game Menu](Menu.png "Menu")
+
+ 
+![Game](AI Vs human2.png "AI Vs human")
