@@ -29,4 +29,4 @@ Techniques to use:
     
     2.Run game.py in any IDE with pygame installed.
     
-![Game Menu](Game pics/Menu.png "Menu")
+![Game Menu](Menu.png "Menu")
