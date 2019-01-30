@@ -3,11 +3,13 @@
 """
 Created on Sun Jan 27 16:45:56 2019
 
+This module is to define the methods to find the best postion for next move, use more intelligent way.
 @author: freddie
 """
 import SimpleAI
 
-
+# This method is to manage a desending list.
+# because we want to cut off the low scored positions to imporve the efficency.
 def  get_position(listt, e):
     if len(listt) == 0:
         return 0
@@ -17,6 +19,8 @@ def  get_position(listt, e):
             i += 1
         return i
 
+# This return the score of the position, similar to simple AI.
+# It helps to eliminate the lowed scored postions. 
 def position_score(board, x, y, role):
     line = ''   
     left, right = x-4, x+4
@@ -70,6 +74,7 @@ def position_score(board, x, y, role):
         score = SimpleAI.white_line_score(line) + SimpleAI.white_line_score(line1) + SimpleAI.white_line_score(line2) + SimpleAI.white_line_score(line3)        
     return score + SimpleAI.boardscore[y][x]
 
+# To generate available moves from current board for the role(AI or human)
 def GenerateMoves(board, role):
     legalmovex = []
     legalmovey = []  
@@ -99,6 +104,8 @@ def GenerateMoves(board, role):
                     legalmovex.insert(p, i)
                     legalmovey.insert(p, j)
     legalmovex, legalmovey = legalmovex[:15], legalmovey[:15]
+    #we only take the first 15 items, because there is a very high possibility
+    #for them to be cutted off by alpha-beta cutting. 
     return legalmovex, legalmovey
 
 def MakeNextMove(board, xlist, ylist, role):
@@ -109,6 +116,8 @@ def MakeNextMove(board, xlist, ylist, role):
     elif role == 'AI':
         board[y][x] = 2
 
+# This method evaluate the current board and return the score of this situation.
+# For the score, we must not only consider the AI, but also the human.
 def evaluate(board):
         AIscore = 0
         humscore = 0
@@ -128,7 +137,10 @@ def rolerev(role):
         return 'AI'
     elif role == 'AI':
         return 'human'
-    
+
+# depth is how deep you want the AI to consider the move.
+# To generate the move, AI must consider both "make myself best" and "let human into trouble"
+# This algorithm bases on : AI choose the best from the worst given by human.
 def AlphaBeta(board, depth, alpha, beta, role):
     xfinal, yfinal = None, None
     if depth == 0:

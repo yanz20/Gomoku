@@ -3,6 +3,8 @@
 """
 Created on Mon Jan 14 22:52:24 2019
 
+This module is used to build the main menu.
+
 @author: freddie
 """
 
@@ -11,9 +13,10 @@ import sys
 import Constants
 import App
 
-
+## Class Menu defines all the entries to the game and the exit.
 class Menu:
- 
+    
+##load the image to build the window and background.
     def __init__(self):
         self.menu = True
         pg.init()
@@ -21,43 +24,48 @@ class Menu:
         self._image_surf = Constants.image_surf
         pg.display.set_caption('Gomoku AI')
         
-        
     def quitGame():
         pg.quit()
         sys.exit()
-        
+
+# start simple AI vs human , user draw first
     def startGame0(self):
         self.menu = False
         app = App.App()
         app.simple_user_first()
-    
+
+# start simple AI vs human, AI draw first
     def startGame1(self):
         self.menu = False
         app = App.App()
         app.simple_AI_first()
-        
+
+# start hard AI vs human , user draw first        
     def startGame2(self):
         self.menu = False
         app = App.App()
         app.hard_User_first()
         
+# start hard AI vs human , AI draw first        
     def startGame3(self):
         self.menu = False
         app = App.App()
         app.hard_AI_first()
         
+# start Player vs Player mode
     def startGame4(self):
         self.menu = False
         app = App.App()
         app.run_PVP()
-        
+
+# start AI vs AI mode     
     def startGame5(self):
         self.menu = False
         app = App.App()
         app.run_AIVAI()
         
 
-        
+# build the UI and entries      
     def appmenu(self):
         self.menu = True
         while self.menu:

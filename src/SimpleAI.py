@@ -3,12 +3,11 @@
 """
 Created on Fri Jan 25 16:09:44 2019
 
+This module defines the method to find the best position in simple AI.
+
 @author: freddie
 """
 import re
-
-# Black represents AI(int 2), and white represents human(int 1)
-# Use regular expression to find existence of each type
 
 blackfive = ['22222'] #score 50000
 blacklive4 = ['022220'] #score 4320
@@ -41,6 +40,7 @@ boardscore = [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
               [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],]
 
 # foucorner(board) is to find a area which we evaluate points in this area only
+# The goal is to reduce positions to be considered and improve the efficency.
 def fourcorner(board):
     xmin, xmax, ymin, ymax = 0, 14, 0, 14
     while ymin < 15 and sum(board[ymin]) == 0 :
@@ -81,7 +81,8 @@ def fourcorner(board):
     
     return xmin, xmax, ymin, ymax
 
-
+ # Black represents AI(int 2), and white represents human(int 1)
+# Use regular expression to find existence of each type in order to return score.
 def black_line_score(line):
     score = 0
     result = re.search(blackfive[0], line)
@@ -130,6 +131,8 @@ def white_line_score(line):
                     return score
     return score  
 
+# Combine four directions' score and give the score of this position.
+# Simple AI will always choose the position with highest score.
 def position_score(board, x, y, c):
     score = 0
     if c == 'black':
@@ -182,7 +185,7 @@ def position_score(board, x, y, c):
         line3 += str(board[down][left])
         left += 1
         down -= 1 
-    
+
     if c == 'black':
         score =  black_line_score(line) +  black_line_score(line1) +  black_line_score(line2) + black_line_score(line3)
     elif c == 'white':

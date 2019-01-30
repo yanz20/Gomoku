@@ -3,6 +3,8 @@
 """
 Created on Mon Jan 21 23:47:22 2019
 
+This module defines how each mode of game works.
+
 @author: freddie
 """
 
@@ -53,6 +55,8 @@ class App():
         theApp = Menu.Menu()
         theApp.appmenu()
     
+    # Wait until the player make his move, then update this move to the board and 
+    # indicate this to be the most recent move.
     def user_move(self):
         while self.userturn == True:
             for event in pg.event.get():
@@ -70,8 +74,10 @@ class App():
             self.update()
         self.done = self.iswin(self.lastmovex//40 - 1, self.lastmovey//40 - 1)      
         
+    # AI ask simple or hard AI for the instruction of the next move, then make
+    # this move and update it to the board.
     def AI_move(self, d):
-       # x, y = AI.nextmove(current_board)
+        # take d as input to choose which difficulty to base on, in order to make move.
        if d == 'simple':
             x, y = AI.simplemove(self.board, 'black')
             self.board[y][x] = 2
@@ -90,6 +96,7 @@ class App():
             self.update()
             self.done = self.iswin(self.lastmovex//40 - 1, self.lastmovey//40 - 1)      
          
+    #this is similar to uer_move, but this one draws the white piece.        
     def user2_move(self):
         while self.userturn == False:
             for event in pg.event.get():
@@ -106,7 +113,8 @@ class App():
                             self.userturn = True
             self.update()
         self.done = self.iswin(self.lastmovex//40 - 1, self.lastmovey//40 - 1) 
-        
+     
+    # This AI is created to against the current AI, it is the less intelligent one. 
     def AI2_move(self, d):
        if d == 'simple':
             x, y = AI.intelligentmovewhite(self.board)
@@ -116,7 +124,8 @@ class App():
             self.userturn = False
             self.update()
             self.done = self.iswin(self.lastmovex//40 - 1, self.lastmovey//40 - 1) 
-            
+    
+    #method used to update the board.        
     def update(self):
         for i in range(15):
             for j in range(15):
@@ -140,7 +149,8 @@ class App():
             pg.draw.line(self._display_surf,[0,0,0], [40, i*40], [600, i*40], 2)
             pg.draw.line(self._display_surf,[0,0,0], [i*40,40], [i*40,600], 2)        
         pg.display.flip()
-            
+     
+    # This method is used to draw winning information. 
     def drawwin(self):
         if self.type in {0,1,2,3}:
             if self.userturn == True:
@@ -167,7 +177,10 @@ class App():
             Constants.menuButton(650, 100, 350, 50, "Restart", Constants.slategrey, Constants.green, self.restartGame)
             pg.display.update()
             pg.time.Clock().tick(15)
-            
+    
+    # This method is called after each move, is to check if game is finished.
+    # It checks the most recent piece with four directions(- | / \) to see if
+    # any contineous five.        
     def iswin(self, x, y): # x stands could be User or AI.
         if self.userturn == False:
             right = self.NumOfDir(x, y, 1, "right")
@@ -270,7 +283,7 @@ class App():
                 num += 1
             return num     
         
-        
+    #Following are all the game modes.   
     def simple_user_first(self):
         self.type = 0
         self.userturn = True
