@@ -10,6 +10,7 @@ import pygame as pg
 
 display_surf = pg.display.set_mode((800,700), pg.HWSURFACE)
 image_surf = pg.transform.scale(pg.image.load("assets/board.png").convert(),(800,700))
+image_menu = pg.transform.scale(pg.image.load("assets/menu.png").convert(),(500,500))
 pg.font.init()
 
 slategrey = (112,128,144)
